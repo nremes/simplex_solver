@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="581.0" prefWidth="941.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.remes.simplex_solver_gui.controller.ViewController">
+   <children>
+      <BorderPane prefHeight="563.0" prefWidth="941.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <GridPane alignment="CENTER">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="467.0" minWidth="10.0" prefWidth="85.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="732.0" minWidth="10.0" prefWidth="706.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="67.0" minHeight="10.0" prefHeight="56.0" valignment="TOP" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Function" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                        <Label text="Constraint 2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Label text="Constraint 1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Label text="Constraint 3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                        <Label text="Constraint 4" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                        <Label text="Constraint 5" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                        <Label text="Constraint 6" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                        <Label text="Constraint 7" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.valignment="TOP">
+                           <children>
+                              <TextField fx:id="funVar1" alignment="TOP_LEFT" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="funVar2" alignment="TOP_LEFT" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="funVar3" alignment="TOP_LEFT" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="funVar4" alignment="TOP_LEFT" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="funVar5" alignment="TOP_LEFT" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="funVar6" alignment="TOP_LEFT" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="funVar7" alignment="TOP_LEFT" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                              <TextField fx:id="con1Var1" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con1Var2" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con1Var3" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con1Var4" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con1Var5" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con1Var6" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con1Var7" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <ComboBox fx:id="con1Sign" minWidth="66.0" prefWidth="150.0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></ComboBox>
+                              <TextField fx:id="con1RightSide" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <children>
+                              <TextField fx:id="con2Var1" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con2Var2" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con2Var3" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con2Var4" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con2Var5" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con2Var6" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con2Var7" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <ComboBox fx:id="con2Sign" minWidth="66.0" prefWidth="150.0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></ComboBox>
+                              <TextField fx:id="con2RightSide" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <children>
+                              <TextField fx:id="con3Var1" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con3Var2" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con3Var3" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con3Var4" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con3Var5" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con3Var6" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con3Var7" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <ComboBox fx:id="con3Sign" minWidth="66.0" prefWidth="150.0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></ComboBox>
+                              <TextField fx:id="con3RightSide" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <children>
+                              <TextField fx:id="con4Var1" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con4Var2" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con4Var3" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con4Var4" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con4Var5" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con4Var6" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con4Var7" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <ComboBox fx:id="con4Sign" minWidth="66.0" prefWidth="150.0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></ComboBox>
+                              <TextField fx:id="con4RightSide" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                           <children>
+                              <TextField fx:id="con5Var1" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con5Var2" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con5Var3" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con5Var4" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con5Var5" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con5Var6" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con5Var7" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <ComboBox fx:id="con5Sign" minWidth="66.0" prefWidth="150.0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></ComboBox>
+                              <TextField fx:id="con5RightSide" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                           <children>
+                              <TextField fx:id="con6Var1" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con6Var2" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con6Var3" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con6Var4" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con6Var5" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con6Var6" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con6Var7" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <ComboBox fx:id="con6Sign" minWidth="66.0" prefWidth="150.0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></ComboBox>
+                              <TextField fx:id="con6RightSide" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                           <children>
+                              <TextField fx:id="con7Var1" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con7Var2" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con7Var3" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con7Var4" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con7Var5" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con7Var6" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <TextField fx:id="con7Var7" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                              <ComboBox fx:id="con7Sign" minWidth="66.0" prefWidth="150.0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></ComboBox>
+                              <TextField fx:id="con7RightSide" text="0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin></TextField>
+                           </children>
+                        </HBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets left="30.0" right="20.0" />
+                     </VBox.margin>
+                  </GridPane>
+               </children>
+            </VBox>
+         </center>
+         <right>
+            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#process" prefHeight="25.0" prefWidth="66.0" text="Run">
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="15.0" />
+                     </font></Button>
+                  <Button mnemonicParsing="false" onAction="#clean" prefHeight="29.0" prefWidth="66.0" text="Clean">
+                     <font>
+                        <Font size="15.0" />
+                     </font></Button>
+               </children>
+               <padding>
+                  <Insets left="10.0" top="100.0" />
+               </padding>
+            </VBox>
+         </right>
+         <bottom>
+            <VBox alignment="TOP_CENTER" prefHeight="150.0" prefWidth="941.0" BorderPane.alignment="CENTER">
+               <children>
+                  <GridPane>
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <TextField alignment="CENTER" editable="false" GridPane.rowIndex="1" fx:id="x1Tf">
+                           <GridPane.margin>
+                              <Insets left="7.0" right="7.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <TextField alignment="CENTER" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="x2Tf">
+                           <GridPane.margin>
+                              <Insets left="7.0" right="7.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <TextField alignment="CENTER" editable="false" prefWidth="87.0" GridPane.columnIndex="2" GridPane.rowIndex="1" fx:id="x3Tf">
+                           <GridPane.margin>
+                              <Insets left="7.0" right="7.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <TextField alignment="CENTER" editable="false" GridPane.columnIndex="3" GridPane.rowIndex="1" fx:id="x4Tf">
+                           <GridPane.margin>
+                              <Insets left="7.0" right="7.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <TextField alignment="CENTER" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="1" fx:id="x5Tf">
+                           <GridPane.margin>
+                              <Insets left="7.0" right="7.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <TextField alignment="CENTER" editable="false" GridPane.columnIndex="5" GridPane.rowIndex="1" fx:id="x6Tf">
+                           <GridPane.margin>
+                              <Insets left="7.0" right="7.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <TextField alignment="CENTER" editable="false" GridPane.columnIndex="6" GridPane.rowIndex="1" fx:id="x7Tf">
+                           <GridPane.margin>
+                              <Insets left="7.0" right="7.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <TextField fx:id="funcResTf" alignment="CENTER" editable="false" GridPane.columnIndex="7" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="7.0" right="7.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="138.0" text="x1" textAlignment="CENTER">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="138.0" text="x2" textAlignment="CENTER" GridPane.columnIndex="1">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="138.0" text="x3" textAlignment="CENTER" GridPane.columnIndex="2">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="138.0" text="x4" textAlignment="CENTER" GridPane.columnIndex="3">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="138.0" text="x5" textAlignment="CENTER" GridPane.columnIndex="4">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="138.0" text="x6" textAlignment="CENTER" GridPane.columnIndex="5">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="138.0" text="x7" textAlignment="CENTER" GridPane.columnIndex="6">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="138.0" text="f(x)" textAlignment="CENTER" GridPane.columnIndex="7">
+                           <font>
+                              <Font name="System Bold" size="21.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </GridPane>
+                  <Label alignment="CENTER" contentDisplay="CENTER" text="Dual problem solution" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextField fx:id="dualProblemSolutionTf" alignment="CENTER" editable="false">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </TextField>
+               </children>
+               <BorderPane.margin>
+                  <Insets left="20.0" right="20.0" />
+               </BorderPane.margin>
+            </VBox>
+         </bottom>
+         <top>
+            <VBox prefHeight="105.0" prefWidth="941.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="49.0" prefWidth="941.0">
+                     <children>
+                        <TextField fx:id="variableCountTf" alignment="CENTER" prefHeight="25.0" prefWidth="195.0" promptText="Number of variables (max. 7)">
+                           <HBox.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="constraintsCountTf" alignment="CENTER" prefHeight="25.0" prefWidth="195.0" promptText="Number of constraints (max. 7)">
+                           <HBox.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <ComboBox fx:id="optimizationCb" prefWidth="150.0">
+                           <HBox.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </HBox.margin>
+                        </ComboBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Label fx:id="messageLb" alignment="CENTER" prefHeight="17.0" prefWidth="958.0" textAlignment="CENTER">
+                     <VBox.margin>
+                        <Insets left="50.0" right="50.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+         </top>
+      </BorderPane>
+   </children>
+</AnchorPane>
