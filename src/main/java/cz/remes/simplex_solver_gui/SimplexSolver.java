@@ -15,26 +15,9 @@ public class SimplexSolver {
     private final static String EQUALS = "=;";
     private static OptimizationType optimizationType;
     private static boolean auxiliaryObjectiveFunctionExists = false;
+    private static int auxiliaryVarsCount = 0;
     private static final DecimalFormat df = new DecimalFormat("#.###");
 
-
-    public static void main(String[] args) {
-        final HashMap<ResultHashMapIdentifier, double[]> results = new HashMap<>();
-        final double[] function = {2,1};
-        final double[][] constraints = {{3,1}, {-1,1}, {0,1}};
-        final double[] constraintsRightSide = {12,4,10};
-        final String[] signs = {">=", ">=", "<="};
-
-        /*final double[] function = {2,1};
-        final double[][] constraints = {{3,1}, {11,1}, {0,1}};
-        final double[] constraintsRightSide = {12,4,10};
-        final String[] signs = {"<=", "<=", "<="};*/
-
-        final OptimizationType optimizationType = OptimizationType.MAXIMIZE;
-
-        process(function, constraints, constraintsRightSide, signs, optimizationType, results);
-        printResult(results, constraints.length, function.length);
-    }
 
     /**
      *
@@ -57,67 +40,76 @@ public class SimplexSolver {
             auxiliaryObjectiveFunctionExists = true;
             solveTwoPhaseProblem(c, A, b, results, signs);
         }
+        auxiliaryObjectiveFunctionExists = false;
     }
 
     private static void solveOnePhaseProblem(double[] c, double[][] A, double[] b, HashMap<ResultHashMapIdentifier, double[]> results) {
         System.out.println(SolverType.ONEPHASE_SOLVER);
         final int m = A.length;
         final int n = c.length;
-        final double[][] table = new double[m + 1][n + m + 1];
+        double[][] table = new double[m + 1][n + m + 1];
 
         //initialize table
         for (int i = 0; i < m; i++) {
             System.arraycopy(A[i], 0, table[i], 0, n);
             table[i][n + i] = 1;
+
+            //put right side of each constraint into table
             table[i][n + m] = b[i];
         }
         for (int i = 0; i < n; i++) {
             table[m][i] = -c[i];
         }
 
-        simplex(table, results, m, n);
+        simplex(table, m, n);
+        roundTable(table, 2);
+        processResults(table, n, m, results);
     }
 
     private static void solveTwoPhaseProblem(double[] c, double[][] A, double[] b, HashMap<ResultHashMapIdentifier, double[]> results, String[] signs) {
         System.out.println(SolverType.TWOPHASE_SOLVER);
-        final int auxiliaryVarsCount = getCountOfAuxiliaryVars(signs);
+        auxiliaryVarsCount = getCountOfAuxiliaryVars(signs);
         final int m = A.length;
         final int n = c.length;
         double[][] table = new double[m + 2][n + m + auxiliaryVarsCount + 1];
 
         //initialize table
+        int auxiliaryVarWritten = 0;
         for (int i = 0; i < m; i++) {
             System.arraycopy(A[i], 0, table[i], 0, n);
             if (signs[i].equals(LOWER_OR_EQUALS)) {
                 table[i][n + i] = 1;
             } else if (signs[i].equals(GREATER_OR_EQUALS)) {
                 table[i][n + i] = -1;
-                table[i][n + auxiliaryVarsCount + i] = 1;
+                table[i][n + m + auxiliaryVarWritten++] = 1;
             } else if (signs[i].equals(EQUALS)) {
-                table[i][n + auxiliaryVarsCount + i] = 1;
+                table[i][n + auxiliaryVarsCount + i + 1] = 1;
             }
-        }
 
-        //put right side of each constraint into table
-        for (int i = 0; i < m; i++) {
+            //put right side of each constraint into table
             table[i][table[i].length - 1] = b[i];
         }
 
         //put negatived objective function into table
-        for (int i = 0; i < c.length; i++) {
+        for (int i = 0; i < n; i++) {
             c[i] = -c[i];
         }
         System.arraycopy(c, 0, table[table.length - 2], 0, n);
 
-        //create auxiliary function a put it into table
+        //find count of auxiliary variables
         double[][] constraintsWithAuxiliaryVar = new double[auxiliaryVarsCount][];
         int counter = 0;
-        for (int i = 0; i < m; i++) {
-            if (table[i][n + i] == -1) {
+        for (int i = 0; i < table.length - 2; i++) {
+            if (n + m +  counter == table[0].length - 1) {
+                break;
+            }
+            if (table[i][n + m + counter] == 1) {
                 constraintsWithAuxiliaryVar[counter] = table[i];
                 counter++;
             }
         }
+
+        //create auxiliary function a put it into table
         double[] auxiliaryFunc = new double[n + m];
         double auxiliaryFuncValue = 0;
         for (int i = 0; i < constraintsWithAuxiliaryVar.length; i++) {
@@ -129,84 +121,29 @@ public class SimplexSolver {
         System.arraycopy(auxiliaryFunc, 0, table[table.length - 1], 0, n + m);
         table[table.length - 1][table[0].length - 1] = auxiliaryFuncValue;
 
+        simplex(table, m, n);
 
+        checkProblemIsFeasible(table, m, n);
 
-        while (true) {
-            System.out.println("**********************************");
-            printTable(table);
-
-            //hledani klicoveho radku
-            int q = 0;
-            for (int i = 0; i < n + m; i++) {
-                if (table[m + 1][i] > table[m + 1][q]) {
-                    q = i;
-                }
-            }
-
-            //je reseni optimalni?
-            boolean isOptimal = false;
-            for (int i = 0; i < n + m; i++) {
-                if (table[m + 1][i] <= 0) {
-                    isOptimal = true;
-                } else {
-                    isOptimal = false;
-                    break;
-                }
-            }
-            if (isOptimal) {
-                break;
-            }
-
-            int p = 0;
-            for (int i = 0; i <= m + 1; i++) {
-                if (table[i][q] > 0) {
-                    p = i;
-                    break;
-                }
-            }
-            if (table[p][q] <= 0) {
-                throw new ArithmeticException("Linear program is unbounded");
-            }
-
-            //hledani klicoveho sloupce
-            for (int i = p + 1; i < m; i++) {
-                if (table[i][q] > 0) {
-                    double alpha = table[i][n + m + auxiliaryVarsCount] / table[i][q];
-                    if (alpha < table[p][n + m + auxiliaryVarsCount] / table[p][q]) {
-                        p = i;
-                    }
-                }
-            }
-
-            //pivot
-            for (int i = 0; i <= m + 1; i++) {
-                if (i != p) {
-                    double alpha = table[i][q] / table[p][q];
-                    for (int j = 0; j <= n + m + auxiliaryVarsCount; j++) {
-                        table[i][j] = Double.parseDouble(df.format(table[i][j]).replace(",", ".")) - Double.parseDouble(df.format(alpha).replace(",", ".")) * Double.parseDouble(df.format(table[p][j]).replace(",", "."));
-                    }
-                }
-            }
-
-            //scale pivot row
-            double pivot = table[p][q];
-            for (int j = 0; j <= n + m + auxiliaryVarsCount; j++) {
-                table[p][j] = Double.parseDouble(df.format(table[p][j]).replace(",", ".")) / Double.parseDouble(df.format(pivot).replace(",", "."));
-            }
-        }
-
+        //create table without auxiliary objective function and solve one-phase simplex
         double[][] newTable = new double[m + 1][n + m + 1];
         for (int i = 0; i < table.length - 1; i++) {
             for (int j = 0; j < table[i].length; j++) {
                 if (j < n + m) {
-                    newTable[i][j] = Double.parseDouble(df.format(table[i][j]).replace(",", "."));
+                    newTable[i][j] = table[i][j];
                 } else if (j == n + m + auxiliaryVarsCount) {
-                    newTable[i][j - auxiliaryVarsCount] = Double.parseDouble(df.format(table[i][j]).replace(",", "."));
+                    newTable[i][j - auxiliaryVarsCount] = table[i][j];
                 }
             }
         }
 
-        simplex(newTable, results, m, n);
+        auxiliaryObjectiveFunctionExists = false;
+        auxiliaryVarsCount = 0;
+
+        simplex(newTable, m, n);
+        roundTable(table, 2);
+        processResults(newTable, n, m, results);
+
     }
 
     private static void minimize(double[] c, double[][] A, double[] b, HashMap<ResultHashMapIdentifier, double[]> results) {
@@ -231,102 +168,100 @@ public class SimplexSolver {
         solveOnePhaseProblem(transposedC, transposedA, transposedB, results);
     }
 
-    private static void simplex(double[][] table, HashMap<ResultHashMapIdentifier, double[]> results, int m, int n) {
+    private static void simplex(double[][] table, int m, int n) {
         //Simplex solving
         while (true) {
-            System.out.println("**********************************");
-            printTable(table);
-
-            //hledani klicove sloupce
-            int q = 0;
-            for (int i = 0; i < n + m; i++) {
-                if (table[m][i] < table[m][q]) {
-                    q = i;
-                }
-            }
-
             //je reseni optimalni?
             boolean isOptimal = false;
             for (int i = 0; i < n + m; i++) {
-                if (table[m][i] >= 0) {
-                    isOptimal = true;
+                if (auxiliaryObjectiveFunctionExists) {
+                    if (table[m + 1][i] <= 0) {
+                        isOptimal = true;
+                    } else {
+                        isOptimal = false;
+                        break;
+                    }
                 } else {
-                    isOptimal = false;
-                    break;
+                    if (table[m][i] >= 0) {
+                        isOptimal = true;
+                    } else {
+                        isOptimal = false;
+                        break;
+                    }
                 }
             }
             if (isOptimal) {
                 break;
             }
 
-            int p = 0;
-            for (int i = 0; i < m; i++) {
-                if (table[i][q] > 0) {
-                    p = i;
-                    break;
+            //hledani klicove sloupce
+            int q = 0;
+            for (int i = 0; i < n + m; i++) {
+                if (auxiliaryObjectiveFunctionExists) {
+                    if (table[m + 1][i] > table[m + 1][q]) {
+                        q = i;
+                    }
+                } else {
+                    if (table[m][i] < table[m][q]) {
+                        q = i;
+                    }
                 }
             }
+
+            //ma uloha nekonecne mnoho reseni?
+            int p = 0;
+            if (auxiliaryObjectiveFunctionExists) {
+                for (int i = 0; i <= m + 1; i++) {
+                    if (table[i][q] > 0) {
+                        p = i;
+                        break;
+                    }
+                }
+            } else {
+                for (int i = 0; i < m; i++) {
+                    if (table[i][q] > 0) {
+                        p = i;
+                        break;
+                    }
+                }
+            }
+
             if (table[p][q] <= 0) {
                 throw new ArithmeticException("Linear program is unbounded");
             }
 
-            for (int i = p + 1; i < m; i++) {
+            //hledani klicoveho radku
+            for (int i = p; i < m; i++) {
                 if (table[i][q] > 0) {
-                    double alpha = table[i][n + m] / table[i][q];
-                    if (alpha < table[p][n + m] / table[p][q]) {
+                    double alpha = table[i][n + m + auxiliaryVarsCount] / table[i][q];
+                    if (alpha < table[p][n + m + auxiliaryVarsCount] / table[p][q]) {
                         p = i;
                     }
                 }
             }
 
-            //pivot
-            for (int i = 0; i <= m; i++) {
+            /*
+            Klicova hodnota je ulozena v table[p][q]
+            Nova optimalni hodnota je zjistovana jako ze
+             - zjistime alphu, coz je podil hodnoty, na aktualnim radku a v klicovem sloupci, a klicove hodnoty
+             - optimalni hodnotu pak ziskame rozdilem hodnoty, kterou optimalizujeme, a nasobkem alphy a klicove hodnoty
+             */
+            int actualRowCount = auxiliaryObjectiveFunctionExists ? m + 1 : m;
+            for (int i = 0; i <= actualRowCount; i++) {
                 if (i != p) {
                     double alpha = table[i][q] / table[p][q];
-                    for (int j = 0; j <= n + m; j++) {
-                        table[i][j] =  Double.parseDouble(df.format(table[i][j]).replace(",", ".")) - Double.parseDouble(df.format(alpha).replace(",", ".")) * Double.parseDouble(df.format(table[p][j]).replace(",", "."));
+                    for (int j = 0; j <= n + m + auxiliaryVarsCount; j++) {
+                        table[i][j] =  table[i][j] - (alpha * table[p][j]);
                     }
                 }
             }
 
-            //scale pivot row
+            //optimalizovani klicoveho radku
             double pivot = table[p][q];
-            for (int j = 0; j <= n + m; j++) {
-                table[p][j] = Double.parseDouble(df.format(table[p][j]).replace(",", ".")) / Double.parseDouble(df.format(pivot).replace(",", "."));
+            for (int j = 0; j <= n + m + auxiliaryVarsCount; j++) {
+                table[p][j] = table[p][j] / pivot;
             }
         }
-
-        //solution
-        double[] resultsArr = new double[n + m]; //plus dual problem solution
-        for (int i = 0; i < n + m; i++) {
-            double result = 0;
-            Integer resultRow = null;
-            boolean resultWasRead = false;
-            for (int j = 0; j < table.length - 1; j++) {
-                if ((int) table[j][i] == 1 && !resultWasRead) {
-                    result = table[j][n + m];
-                    resultWasRead = true;
-                    resultRow = j;
-                } else if (table[j][i] == 0) {
-                    continue;
-                } else {
-                    break;
-                }
-            }
-            resultsArr[i] = result;
-            if (resultRow != null && result != 0) {
-                table[resultRow][n + m] = 0;
-            }
-        }
-        results.put(ResultHashMapIdentifier.OBJECTIVE_FUNCTION_SOLUTION, resultsArr);
-
-        //objective function solution
-        results.put(ResultHashMapIdentifier.OBJECTIVE_FUNCTION_VALUE, new double[]{table[table.length - 1][n + m]});
-
-        //dual function solution
-        double[] dualFunSol = new double[m];
-        System.arraycopy(table[table.length - 1], n, dualFunSol, 0, m);
-        results.put(ResultHashMapIdentifier.DUAL_PROBLEM_SOLUTION, dualFunSol);
     }
 
     private static int getCountOfAuxiliaryVars(String[] signs) {
@@ -377,6 +312,71 @@ public class SimplexSolver {
         System.out.println("\n------ DUAL PROBLEM SOLUTION ------");
         for (int i = 0; i < dualFunSol.length; i++) {
             System.out.printf("x%d = %.2f\n", n + 1 + i, dualFunSol[i]);
+        }
+    }
+
+    private static void processResults(double[][] table, int n, int m, HashMap<ResultHashMapIdentifier, double[]> results) {
+        //solution
+        double[] resultsArr = new double[n + m]; //plus dual problem solution
+        for (int i = 0; i < n + m; i++) {
+            double result = 0;
+            Integer resultRow = null;
+            boolean resultWasRead = false;
+            for (int j = 0; j < table.length - 1; j++) {
+                if ((int) table[j][i] == 1 && !resultWasRead) {
+                    result = table[j][n + m];
+                    resultWasRead = true;
+                    resultRow = j;
+                } else if (table[j][i] == 0) {
+                    continue;
+                } else {
+                    break;
+                }
+            }
+            resultsArr[i] = result;
+            if (resultRow != null && result != 0) {
+                table[resultRow][n + m] = 0;
+            }
+        }
+        results.put(ResultHashMapIdentifier.OBJECTIVE_FUNCTION_SOLUTION, resultsArr);
+
+        //objective function solution
+        results.put(ResultHashMapIdentifier.OBJECTIVE_FUNCTION_VALUE, new double[]{table[table.length - 1][n + m]});
+
+        //dual function solution
+        double[] dualFunSol = new double[m];
+        System.arraycopy(table[table.length - 1], n, dualFunSol, 0, m);
+        results.put(ResultHashMapIdentifier.DUAL_PROBLEM_SOLUTION, dualFunSol);
+    }
+
+    private static void roundTable(double[][] table, int decimalPlaces) {
+        String decPlaces = "%." + decimalPlaces + "f";
+        for (int i = 0; i < table.length; i++) {
+            for (int j = 0; j < table[i].length; j++) {
+                table[i][j] = Double.parseDouble(String.format(decPlaces, table[i][j]).replace(",", "."));
+            }
+        }
+    }
+
+    private static void checkProblemIsFeasible(double[][] table, int m, int n) {
+        boolean isInfeasible = false;
+        // Check if Phase One LP problem is infeasible
+        for (int j = n + m; j < n + m + auxiliaryVarsCount; j++) {
+            for (int i = 0; i < m; i++) {
+                if (table[i][j] == 0 || table[i][j] == 1) {
+                    isInfeasible = true; // Problem is infeasible
+                } else {
+                    isInfeasible = false;
+                    break;
+                }
+            }
+            if (isInfeasible) {
+                break;
+            }
+        }
+
+        if (isInfeasible) {
+            throw  new ArithmeticException("Problem is infeasible");
         }
     }
 }

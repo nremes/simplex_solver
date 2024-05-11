@@ -43,9 +43,6 @@ public class ViewController implements Initializable {
     public TextField con1Var7;
 
     @FXML
-    public TextField con1var6;
-
-    @FXML
     public TextField con2RightSide;
 
     @FXML
@@ -238,28 +235,7 @@ public class ViewController implements Initializable {
     public TextField variableCountTf;
 
     @FXML
-    public TextField x1Tf;
-
-    @FXML
-    public TextField x2Tf;
-
-    @FXML
-    public TextField x3Tf;
-
-    @FXML
-    public TextField x4Tf;
-
-    @FXML
-    public TextField x5Tf;
-
-    @FXML
-    public TextField x6Tf;
-
-    @FXML
-    public TextField x7Tf;
-
-    @FXML
-    public TextField funcResTf;
+    public TextField objectiveFunctionSolTf;
 
     @FXML
     public TextField dualProblemSolutionTf;
@@ -308,7 +284,6 @@ public class ViewController implements Initializable {
             //Problem solving
             SimplexSolver.process(nonZeroFunValues, nonZeroConValues, nonZeroRightSideValues, nonZeroLinesSign, optimizationType, results);
 
-            SimplexSolver.printResult(results, nonZeroFunValues.length, nonZeroConValues.length);
             processResultToGui(results, nonZeroConValues.length, nonZeroFunValues.length);
 
         } catch (Exception e) {
@@ -435,38 +410,27 @@ public class ViewController implements Initializable {
     }
 
     private void processResultToGui(HashMap<ResultHashMapIdentifier, double[]> results, int m, int n) {
+        StringBuilder sb = new StringBuilder();
         final double[] objFunSol = results.get(ResultHashMapIdentifier.OBJECTIVE_FUNCTION_SOLUTION);
         final double[] objFunValue = results.get(ResultHashMapIdentifier.OBJECTIVE_FUNCTION_VALUE);
         final double[] dualFunSol = results.get(ResultHashMapIdentifier.DUAL_PROBLEM_SOLUTION);
 
         //objective function solution
-        if (objFunSol.length > 0) {
-            x1Tf.setText(String.format("%.2f", objFunSol[0]));
-        }
-        if (objFunSol.length > 1) {
-            x2Tf.setText(String.format("%.2f", objFunSol[1]));
-        }
-        if (objFunSol.length > 2) {
-            x3Tf.setText(String.format("%.2f", objFunSol[2]));
-        }
-        if (objFunSol.length > 3) {
-            x4Tf.setText(String.format("%.2f", objFunSol[3]));
-        }
-        if (objFunSol.length > 4) {
-            x5Tf.setText(String.format("%.2f", objFunSol[4]));
-        }
-        if (objFunSol.length > 5) {
-            x6Tf.setText(String.format("%.2f", objFunSol[5]));
-        }
-        if (objFunSol.length > 6) {
-            x7Tf.setText(String.format("%.2f", objFunSol[6]));
+        for (int i = 0; i < objFunSol.length; i++) {
+            if (i == 0) {
+                sb.append(String.format("x%d = %.2f", i + 1, objFunSol[i]));
+                continue;
+            }
+            sb.append(String.format("  |  x%d = %.2f", i + 1, objFunSol[i]));
         }
 
         //objective function value
-        funcResTf.setText(String.format("%.2f", objFunValue[0]));
+        sb.append(String.format("  |  f(x) = %.2f", objFunValue[0]));
+
+        objectiveFunctionSolTf.setText(sb.toString());
 
         //dual problem solution
-        StringBuilder sb = new StringBuilder();
+        sb = new StringBuilder();
         for (int i = 0; i < dualFunSol.length; i++) {
             if (i == 0) {
                 sb.append(String.format("x%d = %.2f", n + i + 1, dualFunSol[i]));
@@ -479,14 +443,7 @@ public class ViewController implements Initializable {
 
     private void cleanResults() {
         messageLb.setText("");
-        x1Tf.clear();
-        x2Tf.clear();
-        x3Tf.clear();
-        x4Tf.clear();
-        x5Tf.clear();
-        x6Tf.clear();
-        x7Tf.clear();
-        funcResTf.clear();
+        objectiveFunctionSolTf.clear();
         dualProblemSolutionTf.clear();
     }
 
