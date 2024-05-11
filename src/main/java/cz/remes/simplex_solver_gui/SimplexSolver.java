@@ -171,7 +171,7 @@ public class SimplexSolver {
     private static void simplex(double[][] table, int m, int n) {
         //Simplex solving
         while (true) {
-            //je reseni optimalni?
+            //is solution optimal?
             boolean isOptimal = false;
             for (int i = 0; i < n + m; i++) {
                 if (auxiliaryObjectiveFunctionExists) {
@@ -194,7 +194,7 @@ public class SimplexSolver {
                 break;
             }
 
-            //hledani klicove sloupce
+            //search key column
             int q = 0;
             for (int i = 0; i < n + m; i++) {
                 if (auxiliaryObjectiveFunctionExists) {
@@ -208,7 +208,7 @@ public class SimplexSolver {
                 }
             }
 
-            //ma uloha nekonecne mnoho reseni?
+            //is problem unbounded?
             int p = 0;
             if (auxiliaryObjectiveFunctionExists) {
                 for (int i = 0; i <= m + 1; i++) {
@@ -230,7 +230,7 @@ public class SimplexSolver {
                 throw new ArithmeticException("Linear program is unbounded");
             }
 
-            //hledani klicoveho radku
+            //search key row
             for (int i = p; i < m; i++) {
                 if (table[i][q] > 0) {
                     double alpha = table[i][n + m + auxiliaryVarsCount] / table[i][q];
@@ -241,10 +241,10 @@ public class SimplexSolver {
             }
 
             /*
-            Klicova hodnota je ulozena v table[p][q]
-            Nova optimalni hodnota je zjistovana jako ze
-             - zjistime alphu, coz je podil hodnoty, na aktualnim radku a v klicovem sloupci, a klicove hodnoty
-             - optimalni hodnotu pak ziskame rozdilem hodnoty, kterou optimalizujeme, a nasobkem alphy a klicove hodnoty
+            Key value is held at table[p][q]
+            New optimal value is found as
+             - we count alpha which is division of value at current row and key column and key value
+             - optimal values if counted as difference of value that is optimized and multiple of alpha and key value
              */
             int actualRowCount = auxiliaryObjectiveFunctionExists ? m + 1 : m;
             for (int i = 0; i <= actualRowCount; i++) {
@@ -256,7 +256,7 @@ public class SimplexSolver {
                 }
             }
 
-            //optimalizovani klicoveho radku
+            //key row optimizing
             double pivot = table[p][q];
             for (int j = 0; j <= n + m + auxiliaryVarsCount; j++) {
                 table[p][j] = table[p][j] / pivot;
