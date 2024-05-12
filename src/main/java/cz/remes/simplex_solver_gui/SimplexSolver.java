@@ -29,6 +29,9 @@ public class SimplexSolver {
      * @param results HashMap that will contain objective function value, objective function solution, dual function solution at the end of method
      */
     public static void process(double[] c, double[][] A, double[] b, String[] signs, OptimizationType opt, HashMap<ResultHashMapIdentifier, double[]> results) {
+        auxiliaryVarsCount = 0;
+        auxiliaryObjectiveFunctionExists = false;
+
         optimizationType = opt;
         SolverType solverType = getSolver(signs);
 
@@ -40,7 +43,6 @@ public class SimplexSolver {
             auxiliaryObjectiveFunctionExists = true;
             solveTwoPhaseProblem(c, A, b, results, signs);
         }
-        auxiliaryObjectiveFunctionExists = false;
     }
 
     private static void solveOnePhaseProblem(double[] c, double[][] A, double[] b, HashMap<ResultHashMapIdentifier, double[]> results) {
@@ -166,6 +168,13 @@ public class SimplexSolver {
         }
 
         solveOnePhaseProblem(transposedC, transposedA, transposedB, results);
+
+        for (int i = 0; i < results.get(ResultHashMapIdentifier.DUAL_PROBLEM_SOLUTION).length; i++) {
+            double temp;
+            temp = results.get(ResultHashMapIdentifier.DUAL_PROBLEM_SOLUTION)[i];
+            results.get(ResultHashMapIdentifier.DUAL_PROBLEM_SOLUTION)[i] = results.get(ResultHashMapIdentifier.OBJECTIVE_FUNCTION_SOLUTION)[i];
+            results.get(ResultHashMapIdentifier.OBJECTIVE_FUNCTION_SOLUTION)[i] = temp;
+        }
     }
 
     private static void simplex(double[][] table, int m, int n) {

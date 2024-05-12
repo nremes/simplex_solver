@@ -68,6 +68,19 @@ class SimplexSolverTest {
         } catch (ArithmeticException ignored) {}
     }
 
+    @Test
+    void minimizeProblem() {
+        final HashMap<ResultHashMapIdentifier, double[]> results = new HashMap<>();
+        final double[] function = {6,18};
+        final double[][] constraints = {{1000,2000}, {25,100}};
+        final double[] constraintsRightSide = {3000,100};
+        final String[] signs = {">=", ">="};
+        final OptimizationType optimizationType = OptimizationType.MINIMIZE;
+
+        SimplexSolver.process(function, constraints, constraintsRightSide, signs, optimizationType, results);
+        compareResults(createExpectedResults(new double[]{2,0.5,0,0}, new double[]{21}, new double[]{0,0.12}), results);
+    }
+
     private void compareResults(HashMap<ResultHashMapIdentifier, double[]> expected, HashMap<ResultHashMapIdentifier, double[]> actual) {
         //objective function solution
         assertEquals(expected.get(ResultHashMapIdentifier.OBJECTIVE_FUNCTION_SOLUTION).length, actual.get(ResultHashMapIdentifier.OBJECTIVE_FUNCTION_SOLUTION).length);
