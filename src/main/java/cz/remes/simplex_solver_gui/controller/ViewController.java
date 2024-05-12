@@ -9,6 +9,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -251,6 +253,7 @@ public class ViewController implements Initializable {
     private final String[] signs = new String[maxCount];
     private final HashMap<ResultHashMapIdentifier, double[]> results = new HashMap<>();
     private OptimizationType optimizationType;
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 
     @FXML
@@ -288,7 +291,7 @@ public class ViewController implements Initializable {
 
         } catch (Exception e) {
             messageLb.setText(e.toString());
-            throw new RuntimeException(e);
+            log.error(e.getMessage());
         }
     }
 

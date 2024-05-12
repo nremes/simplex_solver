@@ -1,0 +1,2 @@
+Manifest-Version: 1.0
+Main-Class: cz.remes.simplex_solver_gui.Main
